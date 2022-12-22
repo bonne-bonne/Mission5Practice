@@ -1,6 +1,7 @@
 const express = require("express");
 const env = require("dotenv");
 const mongoose = require('mongoose');
+const cors = require('cors')
 const http = require("http"); 
 
 const Greeting = require("./greeting")
@@ -11,6 +12,7 @@ const Greeting = require("./greeting")
 env.config();
 const app = express();
 app.use(express.json());
+app.use(cors());
 app.use(express.urlencoded({extended: true}))
 
 //HEALTH CHECK
@@ -47,12 +49,14 @@ app.post('/greeting', async(req, res) => {
 
     console.log(req.body)
 
-    const greeting = new Greeting({ greeting: req.body.greeting})
+    const greeting = new Greeting({ greeting: req.body.inputValue})
     await greeting.save().then(() => console.log("Greeting Saved"))
 
 
-    res.send({message: `Greeting '${req.body.greeting}' was saved to the database`})
+    res.send({message: `Greeting '${req.body.inputValue}' was saved to the database`})
 })
+
+
 
 
 // run()
