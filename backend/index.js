@@ -30,20 +30,17 @@ mongoose.connect(MONGO_URL, {retryWrites: true, w: 'majority'})
 .then(() => { console.log("DB connected")})
 .catch(error => {console.log(error)})
 
-const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
 
-const BlogPost = new Schema({
-  author: ObjectId,
-  title: String,
-  body: String,
-  date: Date
-}); 
 
 
 //========================= ENDPOINTS ==================================//
 app.get('/', (req, res) =>{
     res.send({message: `There is a connection on port ${PORT}`})
+})
+
+app.get('/get-greeting', async(req, res) => {
+    const getGreeting =  await Greeting.findById("63a397d1c18e52a43d530b10")
+    res.send({ message: getGreeting.greeting })
 })
 
 app.post('/greeting', async(req, res) => {
@@ -53,8 +50,20 @@ app.post('/greeting', async(req, res) => {
     const greeting = new Greeting({ greeting: req.body.greeting})
     await greeting.save().then(() => console.log("Greeting Saved"))
 
-    res.send({message: `Greeting ${req.body.greeting} was saved to the database`})
+
+    res.send({message: `Greeting '${req.body.greeting}' was saved to the database`})
 })
+
+
+// run()
+// async function run(){
+//     try {
+//         const banana = await Greeting.findById("63a397d1c18e52a43d530b10")
+//         console.log(banana)
+//     } catch (e) {
+//         console.log(e.message)
+//     }
+// }
 
 
 
