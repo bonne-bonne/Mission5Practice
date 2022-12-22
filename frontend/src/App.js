@@ -3,7 +3,7 @@ import { useState } from 'react'
 
 function App() {
   const [inputValue, setInputValue]= useState('')
-  const [inputValueToSend, setInputValueToSend]= useState('')
+  const [greetingToDisplay, setGreetingToDisplay]= useState('')
 
   const handleInput = () => {
     console.log(inputValue)
@@ -18,8 +18,9 @@ function App() {
     })
        .then((response) => response.json())
        .then((data) => {
-          console.log(data);
-          // Handle data
+          console.log(data.message);
+          setGreetingToDisplay(data.message)
+          
        })
        .catch((err) => {
           console.log(err.message);
@@ -43,7 +44,7 @@ function App() {
         <h1>Send a message:</h1>
         <input onChange={(e) => {setInputValue(e.target.value)}}></input>
         <button onClick={handleInput}>Send the message</button>
-        <div>Conditionally render with the state depending on post fetch request</div>
+        <div>{greetingToDisplay === false ? '' : greetingToDisplay}</div>
         <button onClick={getRequest}>Get request</button>
     </div>
   );

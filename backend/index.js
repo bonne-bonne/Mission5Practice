@@ -52,8 +52,9 @@ app.post('/greeting', async(req, res) => {
     const greeting = new Greeting({ greeting: req.body.inputValue})
     await greeting.save().then(() => console.log("Greeting Saved"))
 
+    console.log({message: `Greeting '${req.body.inputValue}' was saved to the database`})
 
-    res.send({message: `Greeting '${req.body.inputValue}' was saved to the database`})
+    res.send({message: req.body.inputValue})
 })
 
 
