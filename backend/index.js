@@ -37,7 +37,7 @@ mongoose.connect(MONGO_URL, {retryWrites: true, w: 'majority'})
 
 //========================= ENDPOINTS ==================================//
 app.get('/', (req, res) =>{
-    res.send({message: `There is a connection on port ${PORT}`})
+    res.send({message: `There is a connection on port ${PORT} 🐳`})
 })
 
 app.get('/get-greeting', async(req, res) => {
